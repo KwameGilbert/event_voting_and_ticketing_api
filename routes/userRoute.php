@@ -1,6 +1,8 @@
 <?php
 
 use Slim\App;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once __DIR__ . '/../controllers/UserController.php';
 
@@ -9,31 +11,52 @@ return function (App $app) {
 
     $app->group('/users', function () use ($app, $userController) {
 
-        $app->get('', function ($request, $response) use ($userController) {
-            return $userController->getAllUsers();
+        // Route to get all users
+        $app->get('', function (Request $request, Response $response) use ($userController) {
+            $result = $userController->getAllUsers();
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->get('/{id}', function ($request, $response, $args) use ($userController) {
-            return $userController->getUserById($args['id']);
+        // Route to get a user by ID
+        $app->get('/{id}', function (Request $request, Response $response, array $args) use ($userController) {
+            $id = $args['id'];
+            $result = $userController->getUserById($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->post('', function ($request, $response) use ($userController) {
-            $data = $request->getParsedBody();  // Get JSON or form data from the request
-            return $userController->createUser($data);
+        // Route to create a new user
+        $app->post('', function (Request $request, Response $response) use ($userController) {
+            $data = json_decode($request->getBody()->getContents(), true);
+            $result = $userController->createUser($data);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->post('/login', function ($request, $response) use ($userController) {
-            $data = $request->getParsedBody();  // Get JSON or form data from the request
-            return $userController->login($data['email'], $data['password']);
+        // Route for login
+        $app->post('/login', function (Request $request, Response $response) use ($userController) {
+            $data = json_decode($request->getBody()->getContents(), true);
+            $result = $userController->login($data['email'], $data['password']);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->patch('/{id}', function ($request, $response, $args) use ($userController) {
-            $data = $request->getParsedBody();  // Get JSON or form data from the request
-            return $userController->updateUser($args['id'], $data);
+        // Route to update a user by ID
+        $app->patch('/{id}', function (Request $request, Response $response, array $args) use ($userController) {
+            $id = $args['id'];
+            $data = json_decode($request->getBody()->getContents(), true);
+            $result = $userController->updateUser($id, $data);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->delete('/{id}', function ($request, $response, $args) use ($userController) {
-            return $userController->deleteUser($args['id']);
+        // Route to delete a user by ID
+        $app->delete('/{id}', function (Request $request, Response $response, array $args) use ($userController) {
+            $id = $args['id'];
+            $result = $userController->deleteUser($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
     });
 };

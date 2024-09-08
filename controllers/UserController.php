@@ -49,7 +49,7 @@ class UserController
             return json_encode(["user" => $user], 200);
         } else {
             return json_encode([
-                "message" => "User not found."
+                "message" => "User by Id not found."
             ], 404);
         }
     }

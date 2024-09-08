@@ -12,6 +12,7 @@ Content-Type: application/json; charset=UTF-8
 ### Get All Users
 GET http://localhost:5000/users
 
+
 ### Get User by Id
 GET http://localhost:5000/users/4
 
