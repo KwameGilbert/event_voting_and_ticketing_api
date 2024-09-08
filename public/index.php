@@ -10,8 +10,8 @@ $app = AppFactory::create();
 // Load User Routes
 (require __DIR__ . '/../routes/userRoute.php')($app);
 
-// Load Event Routes
-(require __DIR__ . '/../routes/eventRoute.php')($app);
+// // Load Event Routes
+// (require __DIR__ . '/../routes/eventRoute.php')($app);
 
 // Error handling
 $app->addErrorMiddleware(true, true, true);
