@@ -1,0 +1,43 @@
+POST  http://localhost:5000/users
+Content-Type: application/json; charset=UTF-8
+
+{
+    "email": "micheal@gmail.com",
+    "password": "Jhoafdaofks",
+    "firstName": "GiMcheallbert",
+    "lastName": "Joshua",
+    "phone": "01165056"
+}
+
+### Get All Users
+GET http://localhost:5000/users
+
+### Get User by Id
+GET http://localhost:5000/users/4
+
+
+###
+GET http://localhost:5000/users/login
+Content-Type: application/json; charset=UTF-8
+
+{
+    "email": "kwamegilbert1114@gmail.com",
+    "password": "Fearot"
+}
+
+###
+GET http://localhost:5000/users/logout
+
+####
+PATCH  http://localhost:5000/users/2
+Content-Type: application/json; charset=UTF-8
+
+{
+    "email": "kwamegilbert1114@gmail.com",
+    "password": "1234",
+    "firstName": "kWAME",
+    "lastName": "oWUSU"
+}
+
+### Delete user
+DELETE  http://localhost:5000/users/2
