@@ -1,11 +1,12 @@
 <?php
-require_once __DIR__. '/../config/database.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../helpers/JWTHandler.php'; // Include the JWTHandler class
 
 class User
 {
     private $conn;
     private $table_name = "users";
-    
+
     public function __construct()
     {
         $database = new Database();
@@ -60,8 +61,7 @@ class User
         $stmt->bindParam(':id', $id);
         $stmt->execute();
 
-        $user =
-            $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
         unset($user['password']);
 
         return $user;
@@ -82,7 +82,6 @@ class User
         return $userEvents;
     }
 
-
     //Login a user
     public function login($email, $password)
     {
@@ -97,14 +96,29 @@ class User
         // Fetch the user
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // If user is found and password matches, return the user
+        // If user is found and password matches, create a JWT
         if ($user && password_verify($password, $user['password'])) {
+            // Remove password from the response
             unset($user['password']);
-            return $user;
+
+            // Create an instance of JWTHandler
+            $jwtHandler = new JWTHandler();
+
+            // Generate the token
+            $jwt = $jwtHandler->generateToken($user);
+
+            $data = [
+                'token' => $jwt,
+                'data' => $user
+            ];
+            // Return the token
+            return $data;
         }
+
         // If login fails, return false
         return false;
     }
+
 
     // Update a user
     public function updateUser($id, $data)

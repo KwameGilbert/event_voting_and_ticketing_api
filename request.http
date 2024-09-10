@@ -1,3 +1,4 @@
+//Create a new user
 POST  http://localhost:5000/users
 Content-Type: application/json; charset=UTF-8
 
@@ -9,24 +10,30 @@ Content-Type: application/json; charset=UTF-8
     "phone": "8468351681"
 }
 
-### Get All Users
+### 
+
+//Get All Users
 GET http://localhost:5000/users
+### 
 
-
-### Get User by Id
+//Get User by Id
 GET http://localhost:5000/users/4
 
 
 ###
-GET http://localhost:5000/users/login
+
+//User Login
+POST http://localhost:5000/users/login
 Content-Type: application/json; charset=UTF-8
 
 {
     "email": "test1@gmail.com",
-    "password": "testPassword"
+    "password": "tetPassword"
 }
 
 ###
+
+//Logout User
 GET http://localhost:5000/users/logout
 
 ####

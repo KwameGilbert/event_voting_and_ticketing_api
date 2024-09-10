@@ -17,6 +17,7 @@ class UserController
     public function createUser($data)
     {
         if ($this->user->createUser($data)) {
+            unset($data["password"]);
             return json_encode([
                 "message" => "User created successfully.",
                 "data" => $data
@@ -60,16 +61,15 @@ class UserController
         $user = $this->user->login($email, $password);
 
         if ($user) {
-            // Store user data in session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_email'] = $user['email'];
-
             return json_encode([
+                "status" => "success",
                 "message" => "Login successful",
-                "user" => $user
+                "data" => $user['data'],
+                "token" => $user['token']
             ], 200);
         } else {
             return json_encode([
+                "status" => "error",
                 "message" => "Invalid credentials"
             ], 401);
         }

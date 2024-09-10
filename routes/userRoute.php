@@ -28,22 +28,18 @@ return function (App $app) {
             return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $users->get('/login', function (Request $request, Response $response) use ($userController){
-            
+        // Route for login
+        $users->post('/login', function (Request $request, Response $response) use ($userController) {
+            $data = json_decode($request->getBody()->getContents(), true);
+            $result = $userController->login($data['email'], $data['password']);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
         // Route to create a new user
         $users->post('', function (Request $request, Response $response) use ($userController) {
             $data = json_decode($request->getBody()->getContents(), true);
             $result = $userController->createUser($data);
-            $response->getBody()->write($result);
-            return $response->withHeader('Content-Type', 'application/json');
-        });
-
-        // Route for login
-        $users->post('/login', function (Request $request, Response $response) use ($userController) {
-            $data = json_decode($request->getBody()->getContents(), true);
-            $result = $userController->login($data['email'], $data['password']);
             $response->getBody()->write($result);
             return $response->withHeader('Content-Type', 'application/json');
         });
