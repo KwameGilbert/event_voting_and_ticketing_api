@@ -53,3 +53,22 @@ Content-Type: application/json; charset=UTF-8
 DELETE  http://localhost:5000/users/2
 
 
+CREATE TABLE events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    image VARCHAR(255),
+    description TEXT,
+    organization_name VARCHAR(255),
+    sender_id VARCHAR(11),
+    response_message VARCHAR(160),
+    revenue_share DECIMAL(10, 2),
+    cost_per_vote DECIMAL(10, 2),
+    host INT(11),
+    show_results TINYINT(1) DEFAULT 0,
+    event_start DATETIME,
+    event_end DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (host) REFERENCES users(id)
+);
+

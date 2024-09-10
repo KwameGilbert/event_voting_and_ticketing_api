@@ -12,46 +12,27 @@ class Event
         $this->conn = $database->getConnection();
     }
 
-    //Create new Event
     public function createEvent($data)
     {
-        $query = "INSERT INTO " . $this->table_name . " (
-                event_name, 
-                organization_name, 
-                start_date, 
-                end_date, 
-                host, 
-                description, 
-                cost_per_vote, 
-                created_at, 
-                show_results, 
-                status
-              ) VALUES (
-                :event_name, 
-                :organization_name, 
-                :start_date, 
-                :end_date, 
-                :host, 
-                :description, 
-                :cost_per_vote, 
-                :created_at, 
-                :show_results, 
-                :status
-              )";
+        $query = "INSERT INTO " . $this->table_name . " 
+        (name, image, description, organization_name,sender_id, response_message, revenue_share, cost_per_vote, host, show_results, event_start, event_end) 
+        VALUES (:name, :image, :description, :organization_name, :sender_id, :response_message, :revenue_share, :cost_per_vote, :host, :showresults, :event_start, :event_end)";
 
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
-        $stmt->bindParam(':event_name', $data['event_name']);
-        $stmt->bindParam(':organization_name', $data['organization_name']);
-        $stmt->bindParam(':start_date', $data['start_date']);
-        $stmt->bindParam(':end_date', $data['end_date']);
-        $stmt->bindParam(':host', $data['host']);
+        $stmt->bindParam(':name', $data['name']);
+        $stmt->bindParam(':image', $data['image']);
         $stmt->bindParam(':description', $data['description']);
+        $stmt->bindParam(':organization_name', $data['organization_name']);
+        $stmt->bindParam(':sender_id', $data['sender_id']);
+        $stmt->bindParam(':response_message', $data['response_message']);
+        $stmt->bindParam(':revenue_share', $data['revenue_share']);
         $stmt->bindParam(':cost_per_vote', $data['cost_per_vote']);
-        $stmt->bindParam(':created_at', date('Y-m-d H:i:s'));
-        $stmt->bindParam(':show_results', $data['show_results']);
-        $stmt->bindParam(':status', $data['status']);
+        $stmt->bindParam(':host', $data['host']);
+        $stmt->bindParam(':showresults', $data['showresults']);
+        $stmt->bindParam(':event_start', $data['event_start']);
+        $stmt->bindParam(':event_end', $data['event_end']);
 
         // Execute query
         if ($stmt->execute()) {
@@ -88,43 +69,55 @@ class Event
         return $event;
     }
 
-    //Update Event
     public function updateEvent($id, $data)
     {
         // Prepare the update query
         $query = "UPDATE " . $this->table_name . " 
-              SET event_name = :event_name, 
-                  organization_name = :organization_name, 
-                  start_date = :start_date, 
-                  end_date = :end_date, 
-                  host = :host, 
-                  description = :description, 
-                  cost_per_vote = :cost_per_vote, 
-                  show_results = :show_results, 
-                  status = :status
-              WHERE id = :id";
+            SET name = :name, 
+            image = :image, 
+            description = :description, 
+            organization_name = :organization_name, 
+            sender_id = :sender_id, 
+            response_message = :response_message, 
+            revenue_share = :revenue_share, 
+            cost_per_vote = :cost_per_vote, 
+            host = :host, 
+            show_results = :show_results, 
+            event_start = :event_start, 
+            event_end = :event_end,
+            updated_at = :updated_at
+            WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
-        $stmt->bindParam(':event_name', $data['event_name']);
-        $stmt->bindParam(':organization_name', $data['organization_name']);
-        $stmt->bindParam(':start_date', $data['start_date']);
-        $stmt->bindParam(':end_date', $data['end_date']);
-        $stmt->bindParam(':host', $data['host']);
+        $stmt->bindParam(':name', $data['name']);
+        $stmt->bindParam(':image', $data['image']);
         $stmt->bindParam(':description', $data['description']);
+        $stmt->bindParam(':organization_name', $data['organization_name']);
+        $stmt->bindParam(':sender_id', $data['sender_id']);
+        $stmt->bindParam(':response_message', $data['response_message']);
+        $stmt->bindParam(':revenue_share', $data['revenue_share']);
         $stmt->bindParam(':cost_per_vote', $data['cost_per_vote']);
+        $stmt->bindParam(':host', $data['host']);
         $stmt->bindParam(':show_results', $data['show_results']);
-        $stmt->bindParam(':status', $data['status']);
+        $stmt->bindParam(':event_start', $data['event_start']);
+        $stmt->bindParam(':event_end', $data['event_end']);
+        $stmt->bindParam(':updated_at', date('Y-m-d H:i:s'));
         $stmt->bindParam(':id', $id);
 
         // Execute query
         if ($stmt->execute()) {
             return true;
         } else {
+            // Get error information
+            $error = $stmt->errorInfo();
+            // Optionally log or display the error
+            echo "Error executing query: " . $error[2];
             return false;
         }
     }
+
 
     //Delete event
     public function deleteEvent($id)
