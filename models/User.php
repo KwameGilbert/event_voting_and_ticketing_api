@@ -119,7 +119,6 @@ class User
         return false;
     }
 
-
     // Update a user
     public function updateUser($id, $data)
     {

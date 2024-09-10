@@ -1,6 +1,6 @@
 <?php
 require_once '../models/Event.php';
-require_once '../helpers/Response.php';
+
 
 class EventController
 {
@@ -14,25 +14,28 @@ class EventController
     public function createEvent($data)
     {
         if ($this->event->createEvent($data)) {
-            Response::send(
-                201,
-                [
-                    "message" => "Event created successfully.",
-                    "data" => $data
-                ]
-            );
+            return json_encode([
+                "message" => "Event created successfully.",
+                "data" => $data
+            ], 201);
         } else {
-            Response::send(500, ["message" => "Failed to create event."]);
+            return json_encode([
+                "message" => "Failed to create event."
+            ], 500);
         }
     }
 
     public function getAllEvents()
     {
         $events = $this->event->getAllEvents();
-        if ($events >=0) {
-            Response::send(200, $events);
+        if ($events >= 0) {
+            return json_encode([
+                "events" => $events
+            ], 200);
         } else {
-            Response::send(500, ["message" => "Failed to get all events."]);
+            return json_encode([
+                "message" => "Failed to get events."
+            ], 500);
         }
     }
 
@@ -40,34 +43,40 @@ class EventController
     {
         $event = $this->event->getEventById($id);
         if ($event) {
-            Response::send(200, [
-                "event" => $event]);
+            return json_encode([
+                "event" => $event
+            ], 200);
         } else {
-            Response::send(500, ["message" => "Failed to get events for user."]);
+            return json_encode([
+                "message" => "Event by Id not found."
+            ], 404);
         }
     }
 
     public function updateEvent($id, $data)
     {
         if ($this->event->updateEvent($id, $data)) {
-            Response::send(
-                200,
-                [
-                    "message" => "Event updated successfully.",
-                    "data" => $data
-                ]
-            );
+            return json_encode([
+                "message" => "Event updated successfully.",
+                "data" => $data
+            ], 200);
         } else {
-            Response::send(500, ["message" => "Failed to update event."]);
+            return json_encode([
+                "message" => "Failed to update event."
+            ], 500);
         }
     }
 
     public function deleteEvent($id)
     {
         if ($this->event->deleteEvent($id)) {
-            Response::send(200, ["message" => "Event deleted successfully."]);
+            return json_encode([
+                "message" => "Event deleted successfully."
+            ], 200);
         } else {
-            Response::send(500, ["message" => "Failed to delete event."]);
+            return json_encode([
+                "message" => "Failed to delete event."
+            ], 500);
         }
     }
 }

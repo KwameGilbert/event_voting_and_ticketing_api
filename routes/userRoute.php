@@ -1,5 +1,4 @@
 <?php
-
 use Slim\App;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -10,9 +9,8 @@ require_once __DIR__ . '/../controllers/UserController.php';
 return function (App $app) {
     $userController = new UserController();
 
-    $app->group('/users', function (RouteCollectorProxy $users) use ($app, $userController) {
+    $app->group('/users', function (RouteCollectorProxy $users) use ($userController) {
 
-    
         // Route to get all users
         $users->get('', function (Request $request, Response $response) use ($userController) {
             $result = $userController->getAllUsers();

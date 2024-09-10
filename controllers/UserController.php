@@ -1,8 +1,5 @@
 <?php
-
 require_once __DIR__. '/../models/User.php';
-// require_once './helpers/Response.php';
-session_start();
 
 class UserController
 {
@@ -33,7 +30,7 @@ class UserController
     public function getAllUsers()
     {
         $users = $this->user->getAllUsers();
-        if ($users) {
+        if ($users >= 0) {
             return json_encode(["users" => $users], 200);
         } else {
             return json_encode([

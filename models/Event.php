@@ -11,7 +11,8 @@ class Event
         $database = new Database();
         $this->conn = $database->getConnection();
     }
-
+    
+    // Create a new event
     public function createEvent($data)
     {
         $query = "INSERT INTO " . $this->table_name . " 
@@ -69,6 +70,7 @@ class Event
         return $event;
     }
 
+    // Update event
     public function updateEvent($id, $data)
     {
         // Prepare the update query
@@ -117,7 +119,6 @@ class Event
             return false;
         }
     }
-
 
     //Delete event
     public function deleteEvent($id)

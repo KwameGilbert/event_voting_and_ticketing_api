@@ -1,33 +1,52 @@
 <?php
 use Slim\App;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Routing\RouteCollectorProxy;
 
 require_once __DIR__ . '/../controllers/EventController.php';
 
 return function (App $app) {
     $eventController = new EventController();
 
-    $app->group('/events', function () use ($app,$eventController) {
-
-        $app->get('', function () use ($eventController) {
-            return $eventController->getAllEvents();
+    $app->group('/events', function (RouteCollectorProxy $events) use ($eventController) {
+        
+        $events->get('', function (Request $request, Response $response) use ($eventController) {
+            $result = $eventController->getAllEvents();
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->get('/{id}', function ($args) use ($eventController) {
-            return $eventController->getEventById($args['id']);
+        // Route to get a event by ID
+        $events->get('/{id:[0-9]+}', function (Request $request, Response $response, $args) use ($eventController) {
+            $id = $args['id'];
+            $result = $eventController->getEventById($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->post('', function () use ($eventController) {
-            $data = json_decode(file_get_contents('php://input'), true);
-            return $eventController->createEvent($data);
+        // Route to create a new event
+        $events->post('', function (Request $request, Response $response) use ($eventController) {
+            $data = json_decode($request->getBody()->getContents(), true);
+            $result = $eventController->createEvent($data);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->patch('/{id}', function ($args) use ($eventController) {
-            $data = json_decode(file_get_contents('php://input'), true);
-            return $eventController->updateEvent($args['id'], $data);
+        // Route to update a event by ID
+        $events->patch('/{id:[0-9]+}', function (Request $request, Response $response, $args) use ($eventController) {
+            $id = $args['id'];
+            $data = json_decode($request->getBody()->getContents(), true);
+            $result = $eventController->updateEvent($id, $data);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $app->delete('/{id}', function ($args) use ($eventController) {
-            return $eventController->deleteEvent($args['id']);
+        $events->delete('/{id:[0-9]+}', function (Request $request, Response $response, $args) use ($eventController) {
+            $id = $args['id'];
+            $result = $eventController->deleteEvent($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
         });
     });
 };
