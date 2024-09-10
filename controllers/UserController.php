@@ -55,6 +55,18 @@ class UserController
         }
     }
 
+    // Get Events By User ID
+    public function getEventsByUserId($id)
+    {
+        $userEvents = $this->user->getEventsByUserId($id);
+        if ($userEvents) {
+            return json_encode(["userEvents" => $userEvents], 200);
+        } else {
+            return json_encode([
+                "message" => "Events by User Id not found."
+            ], 404);
+        }
+    }
     // Login User
     public function login($email, $password)
     {
@@ -104,15 +116,4 @@ class UserController
         }
     }
 
-    // Logout User
-    public function logout()
-    {
-        // Destroy the session to log the user out
-        session_unset();  // Unset all session variables
-        session_destroy();  // Destroy the session itself
-
-        return json_encode([
-            "message" => "Logout successful"
-        ], 200);
-    }
 }

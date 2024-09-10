@@ -68,7 +68,7 @@ class User
     }
 
     //Get all Events of a User
-    public function getAllUserEvents($id)
+    public function getEventsByUserId($id)
     {
         $query = "SELECT * FROM events WHERE host = :host";
         $stmt = $this->conn->prepare($query);

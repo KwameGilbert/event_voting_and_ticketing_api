@@ -28,6 +28,14 @@ return function (App $app) {
             return $response->withHeader('Content-Type', 'application/json');
         });
 
+        // Get all user Events
+        $users->get('/{id:[0-9]+}/events', function (Request $request, Response $response, array $args) use ($userController) {
+            $id = $args['id'];
+            $result = $userController->getEventsByUserId($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
+        });
+
         // Route for login
         $users->post('/login', function (Request $request, Response $response) use ($userController) {
             $data = json_decode($request->getBody()->getContents(), true);
