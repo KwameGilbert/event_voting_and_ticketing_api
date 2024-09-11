@@ -1,2 +1,4 @@
 vendor
 .env
+requests/test-data/*
+logs/*
