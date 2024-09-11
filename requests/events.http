@@ -3,34 +3,34 @@ POST http://localhost:5000/events
 Content-Type: application/json; charset=UTF-8
 
 {
-  "name": "Miss Grand",
-  "image": "https://example.com/images/miss-grand-pageant.png",
-  "description": "The annual Miss Grand Beauty Pageant and Awards ceremony, where contestants are voted for by the audience through monetary contributions.",
-  "organization_name": "Grand Beauty Organization",
-  "sender_id": "1234567890",
-  "response_message": "Thank you for voting in the Miss Grand Beauty Pageant. Your vote counts!",
-  "organizer_share": 0.80,
-  "admin_share": 0.20,
-  "cost_per_vote": 1.00,
-  "host": 5,
+  "name": "Ultimate Music Awards",
+  "image": "https://example.com/images/ultimate-music-awards.png",
+  "description": "Vote for the top musicians in this highly anticipated music awards event.",
+  "organization_name": "Global Music Awards",
+  "sender_id": "0203322110",
+  "response_message": "Your vote for the Ultimate Music Awards has been recorded. Thank you for participating!",
+  "organizer_share": "0.78",
+  "admin_share": "0.22",
+  "cost_per_vote": "3.00",
+  "host": 1,
   "show_results": 1,
-  "event_start": "2024-12-01 18:00:00",
-  "event_end": "2024-12-31 22:00:00"
+  "event_start": "2024-12-01 19:00:00",
+  "event_end": "2024-12-25 23:00:00"
 }
 
 ### 
 
-//Get All Users
+//Get All Events
 GET http://localhost:5000/events
 ### 
 
 //Get User by Id
-GET http://localhost:5000/events/6
+GET http://localhost:5000/events/1
 
 ###
 
 // Get Events of User By Id
-GET http://localhost:5000/users/5/events
+GET http://localhost:5000/users/1/events
 
 ####
 
@@ -58,6 +58,6 @@ Content-Type: application/json; charset=UTF-8
 
 
 ### Delete user
-DELETE  http://localhost:5000/users/1
+DELETE  http://localhost:5000/events/11
 
 ###
