@@ -1,15 +1,16 @@
 //Create a new user
-POST  http://localhost:5000/events 
+POST http://localhost:5000/events 
 Content-Type: application/json; charset=UTF-8
 
 {
-  "name": "Miss Grand Beauty Pageant",
+  "name": "Miss Grand",
   "image": "https://example.com/images/miss-grand-pageant.png",
   "description": "The annual Miss Grand Beauty Pageant and Awards ceremony, where contestants are voted for by the audience through monetary contributions.",
   "organization_name": "Grand Beauty Organization",
   "sender_id": "1234567890",
   "response_message": "Thank you for voting in the Miss Grand Beauty Pageant. Your vote counts!",
-  "revenue_share": 0.30,
+  "organizer_share": 0.80,
+  "admin_share": 0.20,
   "cost_per_vote": 1.00,
   "host": 5,
   "show_results": 1,
@@ -20,41 +21,41 @@ Content-Type: application/json; charset=UTF-8
 ### 
 
 //Get All Users
-GET http://localhost:5000/users
+GET http://localhost:5000/events
 ### 
 
 //Get User by Id
-GET http://localhost:5000/users/6
+GET http://localhost:5000/events/6
 
 ###
 
 // Get Events of User By Id
-GET http://localhost:5000/users/4/events
-
-
-###
-//User Login
-POST http://localhost:5000/users/login
-Content-Type: application/json; charset=UTF-8
-
-{
-    "email": "test1@gmail.com",
-    "password": "testPassword"
-}
-
+GET http://localhost:5000/users/5/events
 
 ####
 
 //Update user
-PATCH  http://localhost:5000/users/2
+PATCH http://localhost:5000/events/1
 Content-Type: application/json; charset=UTF-8
 
 {
-    "email": "kwamegilbert1114@gmail.com",
-    "password": "1234",
-    "firstName": "kWAME",
-    "lastName": "oWUSU"
+  "name": "Miss Elegance Awards",
+  "image": "https://example.com/images/miss-elegance.png",
+  "description": "A prestigious awards ceremony recognizing the elegance and grace of participants.",
+  "organization_name": "Elegance Foundation",
+  "sender_id": "0245678901",
+  "response_message": "Thank you for supporting the Miss Elegance Awards! Your contribution is appreciated.",
+  "organizer_share": "0.75",
+  "admin_share": "0.25",
+  "cost_per_vote": "2.00",
+  "host": 3,
+  "show_results": 1,
+  "event_start": "2024-11-15 17:00:00",
+  "event_end": "2024-11-30 21:00:00"
 }
+
+
+
 
 ### Delete user
 DELETE  http://localhost:5000/users/1

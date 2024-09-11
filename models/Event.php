@@ -16,8 +16,8 @@ class Event
     public function createEvent($data)
     {
         $query = "INSERT INTO " . $this->table_name . " 
-        (name, image, description, organization_name,sender_id, response_message, revenue_share, cost_per_vote, host, show_results, event_start, event_end) 
-        VALUES (:name, :image, :description, :organization_name, :sender_id, :response_message, :revenue_share, :cost_per_vote, :host, :showresults, :event_start, :event_end)";
+        (name, image, description, organization_name,sender_id, response_message, organizer_share, admin_share , cost_per_vote, host, show_results, event_start, event_end) 
+        VALUES (:name, :image, :description, :organization_name, :sender_id, :response_message, :organizer_share, :admin_share, :cost_per_vote, :host, :showresults, :event_start, :event_end)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -28,7 +28,8 @@ class Event
         $stmt->bindParam(':organization_name', $data['organization_name']);
         $stmt->bindParam(':sender_id', $data['sender_id']);
         $stmt->bindParam(':response_message', $data['response_message']);
-        $stmt->bindParam(':revenue_share', $data['revenue_share']);
+        $stmt->bindParam(':organizer_share', $data['organizer_share']);
+        $stmt->bindParam(':admin_share', $data['admin_share']);
         $stmt->bindParam(':cost_per_vote', $data['cost_per_vote']);
         $stmt->bindParam(':host', $data['host']);
         $stmt->bindParam(':showresults', $data['showresults']);
@@ -75,20 +76,20 @@ class Event
     {
         // Prepare the update query
         $query = "UPDATE " . $this->table_name . " 
-            SET name = :name, 
-            image = :image, 
-            description = :description, 
-            organization_name = :organization_name, 
-            sender_id = :sender_id, 
-            response_message = :response_message, 
-            revenue_share = :revenue_share, 
-            cost_per_vote = :cost_per_vote, 
-            host = :host, 
-            show_results = :show_results, 
-            event_start = :event_start, 
-            event_end = :event_end,
-            updated_at = :updated_at
-            WHERE id = :id";
+        SET name = :name, 
+        image = :image, 
+        description = :description, 
+        organization_name = :organization_name, 
+        sender_id = :sender_id, 
+        response_message = :response_message, 
+        organizer_share = :organizer_share, 
+        admin_share = :admin_share, 
+        cost_per_vote = :cost_per_vote, 
+        host = :host, 
+        show_results = :show_results, 
+        event_start = :event_start, 
+        event_end = :event_end
+        WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -99,13 +100,13 @@ class Event
         $stmt->bindParam(':organization_name', $data['organization_name']);
         $stmt->bindParam(':sender_id', $data['sender_id']);
         $stmt->bindParam(':response_message', $data['response_message']);
-        $stmt->bindParam(':revenue_share', $data['revenue_share']);
+        $stmt->bindParam(':organizer_share', $data['organizer_share']);
+        $stmt->bindParam(':admin_share', $data['admin_share']);
         $stmt->bindParam(':cost_per_vote', $data['cost_per_vote']);
         $stmt->bindParam(':host', $data['host']);
-        $stmt->bindParam(':show_results', $data['show_results']);
+        $stmt->bindParam(':show_results', $data['show_results']); 
         $stmt->bindParam(':event_start', $data['event_start']);
         $stmt->bindParam(':event_end', $data['event_end']);
-        $stmt->bindParam(':updated_at', date('Y-m-d H:i:s'));
         $stmt->bindParam(':id', $id);
 
         // Execute query
@@ -119,6 +120,7 @@ class Event
             return false;
         }
     }
+
 
     //Delete event
     public function deleteEvent($id)

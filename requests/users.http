@@ -3,13 +3,12 @@ POST  http://localhost:5000/users
 Content-Type: application/json; charset=UTF-8
 
 {
-    "email": "test1@gmail.com",
-    "password": "testPassword",
-    "firstName": "TestFirst",
-    "lastName": "TestLast",
-    "phone": "8468351681"
-}
-
+      "firstName": "Emma",
+      "lastName": "Williams",
+      "email": "emma.williams@example.com",
+      "password": "Q5m^yTz83@j",
+      "phone": "0551234567"
+    }
 ### 
 
 //Get All Users
