@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "firstName": "David",
+      "lastName": "Anderson",
+      "email": "david.anderson@example.com",
+      "password": "k2d.Nja4V$&",
+      "phone": "0244112233"
+    },
+    {
+      "firstName": "Sarah",
+      "lastName": "Johnson",
+      "email": "sarah.johnson@example.com",
+      "password": "8Ua&!vKl09x",
+      "phone": "0209988776"
+    },
+    {
+      "firstName": "Emma",
+      "lastName": "Williams",
+      "email": "emma.williams@example.com",
+      "password": "Q5m^yTz83@j",
+      "phone": "0551234567"
+    },
+    {
+      "firstName": "James",
+      "lastName": "Smith",
+      "email": "james.smith@example.com",
+      "password": "7oR&xPm4$Aa",
+      "phone": "0276655443"
+    },
+    {
+      "firstName": "Sophia",
+      "lastName": "Brown",
+      "email": "sophia.brown@example.com",
+      "password": "Jq#2Lz9^bTp",
+      "phone": "0301456789"
+    }
+  ]
+}
