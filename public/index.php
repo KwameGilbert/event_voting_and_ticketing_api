@@ -22,6 +22,9 @@ $errorMiddleware->setDefaultErrorHandler($ErrorHandler);
 // Load Event Routes
 (require __DIR__ . '/../routes/eventRoute.php')($app);
 
+// Load Category Routes
+(require __DIR__ . '/../routes/categoryRoute.php')($app);
+
 
 // Run the application (no need to create the server request manually)
 $app->run();

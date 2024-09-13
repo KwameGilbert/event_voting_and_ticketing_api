@@ -36,9 +36,11 @@ return function (App $app){
             return $response->withHeader('Content-Type','application/json');
         });
 
-        $categories->delete('/{id:[0-9]+}', function (Request $request, Response $response))
-
+        $categories->delete('/{id:[0-9]+}', function (Request $request, Response $response, array $args) use ($categoryController) {
+            $id = $args['id'];
+            $result = $categoryController->deleteCategory($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type','application/json');
+        });
     });
-}
-
-?>
+};

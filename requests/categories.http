@@ -1,0 +1,17 @@
+//Get All Categories of Event
+GET http://localhost:5000/categories/1
+
+###
+
+//Create a new Category
+POST http://localhost:5000/categories
+Content-Type: 'application/json'; charset=UTF-8
+
+{
+    "name": "Most Decent Female",
+    "description": "Most Decent Female",
+    "image": "http://example.com/images/categories/most-decent.png",
+    "event_id": "1"
+}
+
+###
