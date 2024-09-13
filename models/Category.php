@@ -35,17 +35,24 @@ class Category
         }
     }
 
+    // Get All Categories By Event with the count of contestants for each category
+    public function getCategoriesOfEvent($id)
+    {
+        $query = "
+        SELECT c.*, COUNT(ct.id) AS contestant_count
+        FROM " . $this->table_name . " c
+        LEFT JOIN contestants ct ON ct.category_id = c.id
+        WHERE c.event_id = :event_id
+        GROUP BY c.id";
 
-    //Get All Categories By Event
-    public function getCategoriesOfEvent($id){
-        $query = "SELECT * FROM " . $this->table_name . " WHERE event_id=:event_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':event_id', $id);
         $stmt->execute();
-        
-        $categories = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all categories with contestant count
         return $categories;
     }
+
 
     public function updateCategory($data){
         $query = "UPDATE " . $this->table_name . " 
@@ -57,8 +64,26 @@ class Category
         
         if($stmt->execute()){
             return true;
+        }else{
+            $error = $stmt->errorInfo();
+            echo "Error updating category:" . $error[2];
+            return false;
+        }
+    }
+
+    public function deleteCategory($id){
+        $query = "DELETE FROM " . $this->table_name . " WHERE id=:id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+
+        if($stmt->execute()){
+            return true;
+        }else{
+            $error = $stmt->errorInfo();
+            echo "Error deleting category: " . $error[2];
         }
     }
 }
+
 
 
