@@ -12,9 +12,16 @@ return function (App $app){
     $app->group('/categories', function (RouteCollectorProxy $categories) use ($categoryController){
 
         //Route to get all event Categories
-        $categories->get('/{id:[0-9]+}', function (Request $request, Response $response, array $args) use ($categoryController){
+        $categories->get('/event/{id:[0-9]+}', function (Request $request, Response $response, array $args) use ($categoryController){
             $id = $args['id'];
             $result = $categoryController->getCategoriesOfEvent($id);
+            $response->getBody()->write($result);
+            return $response->withHeader('Content-Type', 'application/json');
+        });
+
+        //Rout to get all categories;
+        $categories->get('', function (Request $request, Response $response) use ($categoryController){
+            $result = $categoryController->getAllCategories();
             $response->getBody()->write($result);
             return $response->withHeader('Content-Type', 'application/json');
         });
@@ -27,7 +34,7 @@ return function (App $app){
             return $response->withHeader('Content-Type', 'application/json');
         });
 
-        //Route to Update a collatory
+        //Route to Update a category
         $categories->patch('/{id:[0-9]+}', function (Request $request, Response $response, array $args) use ($categoryController){
             $id = $args['id'];
             $data = json_decode($request->getBody()->getContents(), true);

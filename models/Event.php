@@ -72,6 +72,7 @@ class Event
         return $event;
     }
 
+    
     // Update event
     public function updateEvent($id, $data)
     {

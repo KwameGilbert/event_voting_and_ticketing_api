@@ -12,11 +12,11 @@ class Category
         $this->conn = $database->getConnection();
     }
 
-    //Create a new collatory
+    //Create a new category
     public function createCategory($data){
         $query = "INSERT INTO " . $this->table_name . "
         (name, description, image, event_id)
-        VALUES(:name, :descrition, :image, :event_id)";
+        VALUES(:name, :description, :image, :event_id)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -35,6 +35,15 @@ class Category
         }
     }
 
+    public function getAllCategories(){
+        $query = "SELECT * FROM ". $this->table_name ;
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->execute();
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $categories;
+    }
+
     // Get All Categories By Event with the count of contestants for each category
     public function getCategoriesOfEvent($id)
     {
@@ -48,9 +57,8 @@ class Category
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':event_id', $id);
         $stmt->execute();
-
-        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all categories with contestant count
-        return $categories;
+        $eventCategories = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all categories with contestant count
+        return $eventCategories;    
     }
 
 

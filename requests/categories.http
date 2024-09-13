@@ -1,5 +1,11 @@
+//Get All Categories 
+GET http://localhost:5000/categories
+
+
+###
+
 //Get All Categories of Event
-GET http://localhost:5000/categories/1
+GET http://localhost:5000/categories/event/1
 
 ###
 
@@ -8,10 +14,25 @@ POST http://localhost:5000/categories
 Content-Type: 'application/json'; charset=UTF-8
 
 {
-    "name": "Most Decent Female",
+        "name": "Most Talented",
+        "description": "Most Talented",
+        "image": "http://example.com/images/categories/most-talented.png",
+        "event_id": "1"
+    }
+###
+
+//Update a category
+PATCH http://localhost:5000/categories/1
+Content-Type: 'application/json'; charset=UTF-8
+
+{
+    "name": "Most Decent Male",
     "description": "Most Decent Female",
     "image": "http://example.com/images/categories/most-decent.png",
     "event_id": "1"
 }
+
+###
+DELETE http://localhost:5000/categories/1
 
 ###

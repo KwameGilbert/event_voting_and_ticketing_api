@@ -22,7 +22,17 @@ class CategoryController{
         }
     }
 
-    //Get all Categories
+    //Get All Categories
+    public function getAllCategories(){
+        $allCategories = $this->category->getAllCategories();
+        if($allCategories >= 0){
+            return json_encode(["allCategories" => $allCategories], 200);
+        }else {
+            return json_encode(["message" => "Failed to Fetch all categories"], 500);
+        }
+    }
+
+    //Get all Categories of an Event
     public function getCategoriesOfEvent($id){
         $eventCategories = $this->category->getCategoriesOfEvent($id);
         if($eventCategories >= 0){
