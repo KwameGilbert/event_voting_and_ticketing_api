@@ -54,14 +54,15 @@ class Category
     }
 
 
-    public function updateCategory($data){
+    public function updateCategory($id, $data){
         $query = "UPDATE " . $this->table_name . " 
-        SET name=:name, description=:description, image=:image";
+        SET name=:name, description=:description, image=:image WHERE id=:id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':name', $data['name']);
         $stmt->bindParam(':description', $data['description']);
         $stmt->bindParam(':image', $data['image']);
-        
+        $stmt->bindParam(':id',$id);
+
         if($stmt->execute()){
             return true;
         }else{
@@ -81,6 +82,7 @@ class Category
         }else{
             $error = $stmt->errorInfo();
             echo "Error deleting category: " . $error[2];
+            return false;
         }
     }
 }
