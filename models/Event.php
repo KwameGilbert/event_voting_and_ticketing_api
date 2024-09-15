@@ -44,7 +44,7 @@ class Event
             // Get error information
             $error = $stmt->errorInfo();
             // Optionally log or display the error
-            echo "Error executing query: " . $error[2];
+            echo "Error creating event: " . $error[2];
             return false;
         }
     }
