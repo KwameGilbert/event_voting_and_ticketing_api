@@ -1,4 +1,6 @@
 {
+    "name": "kwamegilbert/event_voting_and_ticketing_api",
+    "description": "An API for event voting and ticketing.",
     "require": {
         "vlucas/phpdotenv": "^5.6",
         "monolog/monolog": "^3.7",
@@ -7,5 +9,4 @@
         "slim/psr7": "^1.7",
         "firebase/php-jwt": "^6.10"
     }
-   
 }
