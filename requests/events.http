@@ -21,7 +21,7 @@ Content-Type: application/json; charset=UTF-8
 ### 
 
 //Get All Events
-GET http://localhost:5000/events
+GET http://localhost:5000/hello
 ### 
 
 //Get User by Id
